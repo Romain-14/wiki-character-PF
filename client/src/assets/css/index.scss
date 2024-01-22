@@ -1,0 +1,467 @@
+@use "variables" as *;
+@use "mixins" as *;
+@use "menu" as *;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: "Roboto", sans-serif;
+    background-color: $color-light;
+    color: $color-light;
+    font-size: 1.6rem;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 100%;
+    min-height: 100vh;
+    max-width: 800px;
+    background-color: $color-dark;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+    color: $color-light;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+header,
+main,
+footer {
+    flex: 1 0 auto;
+}
+
+header,
+footer {
+    background-color: $color-dark;
+    padding: 10px;
+    height: 120px;
+    max-height: 120px;
+}
+
+footer {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    flex-shrink: 0;
+    // margin-top: auto;
+    text-align: center;
+    border-top: 1px solid $color-light;
+    p {
+        margin: 0;
+    }
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-image: url("../images/banner.png");
+    background-size: cover;
+    background-position: center;
+
+    > div:first-child {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    h1 {
+        padding: 7px;
+        background-color: $color-light;
+        color: $color-dark;
+        height: 45px;
+        line-height: 33px;
+        border-radius: 5px;
+        border: 1px solid $color-dark;
+        font-size: 2rem;
+        text-transform: uppercase;
+        a {
+            color: $color-dark;
+        }
+    }
+    div {
+        position: relative;
+    }
+
+    input[type="search"] {
+        width: 100%;
+        padding: 10px;
+        border-bottom: 1px solid $color-dark;
+        border-radius: 5px;
+        font-size: 2rem;
+    }
+    .fa-magnifying-glass {
+        position: absolute;
+        top: 50%;
+        right: 7px;
+        transform: translateY(-50%);
+        font-size: 2.3rem;
+        color: $color-dark;
+    }
+
+    .searchList {
+        position: relative;
+        z-index: 400;
+        background-color: #fff;
+        border-radius: 5px;
+        border: 1px solid $color-dark;
+        .msg-search-list {
+            padding: 10px;
+            text-align: center;
+            color: $color-dark;
+        }
+        a {
+            display: inline-block;
+            color: $color-dark;
+            padding: 10px 0;
+            margin: 5px;
+        }
+    }
+}
+
+main {
+    padding: 10px;
+    border-radius: 15px;
+    > div {
+        background-color: $color-light;
+        padding: 0 20px 20px;
+    }
+}
+
+#home {
+    article {
+        background-color: $color-light;
+        color: $color-dark;
+        margin: 0 0 20px;
+
+        > a {
+            display: block;
+        }
+        a {
+            color: $color-dark;
+        }
+        p {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            margin: 10px auto;
+        }
+        h2 {
+            margin: auto;
+            font-size: 2.2rem;
+            + p {
+                width: 100%;
+                background-color: #d7d4d4;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+        }
+        img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            object-position: top;
+            margin: auto;
+            border-radius: 5px;
+        }
+    }
+}
+
+#list,
+#home {
+    h2 {
+        width: 100%;
+        padding: 20px 0;
+    }
+
+    .character-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    figure {
+        position: relative;
+        align-self: center;
+        img {
+            width: 180px;
+            height: 200px;
+            border: 1px solid $color-dark;
+            border-radius: 15px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .cta-modal {
+            transition: all 0.3s ease-in-out;
+            position: absolute;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            border: 1px solid $color-dark;
+            border-top-right-radius: 15px;
+            border-bottom-left-radius: 15px;
+            color: $color-light;
+            z-index: 100;
+            background-color: $color-dark;
+            opacity: 0.8;
+            cursor: pointer;
+            .icon {
+                @include center();
+                font-size: 3rem;
+            }
+        }
+        &:hover {
+            .cta-modal {
+                transform: translate(10px, -10px);
+            }
+            img {
+                transform: scale(1.1);
+            }
+        }
+        figcaption {
+            color: $color-dark;
+            text-align: center;
+            padding: 8px 0;
+            text-transform: uppercase;
+        }
+    }
+
+    .modal {
+        @include center();
+        background-color: $color-light;
+        font-size: 2rem;
+        z-index: 100000;
+        border-radius: 15px;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        max-width: 80vw;
+        .modal-content {
+            position: relative;
+            padding: 7px;
+            max-height: 580px;
+            overflow-y: scroll;
+        }
+        p {
+            padding: 0 15px;
+        }
+        .cta-close-modal {
+            position: absolute;
+            top: 5px;
+            right: 25px;
+            cursor: pointer;
+            background-color: $color-dark;
+            color: $color-light;
+            z-index: 1000000;
+        }
+    }
+}
+
+#detail,
+#not-found {
+    padding: 20px;
+    a {
+        color: $color-dark;
+        border: 1px solid;
+        border-radius: 10px;
+        padding: 8px;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    margin: auto;
+    padding: 15px;
+    background-color: $color-light;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    color: $color-dark;
+    legend {
+        text-align: center;
+        font-size: 2rem;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+    }
+    input {
+        margin-bottom: 10px;
+        border-radius: 5px;
+        padding: 3px;
+        font-size: 2rem;
+    }
+    button[type="submit"] {
+        padding: 10px;
+        border-radius: 5px;
+        background-color: $color-success;
+        color: $color-dark;
+        font-weight: bold;
+        text-transform: uppercase;
+        border: 0;
+        box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.5);
+        font-size: 1.6rem;
+    }
+    a {
+        display: block;
+        width: fit-content;
+        margin: 15px auto 0;
+        color: $color-dark;
+        color: royalblue;
+        font-weight: bold;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.cta-logout {
+    cursor: pointer;
+    background-color: $color-light;
+    margin: 8px;
+    padding: 7px;
+    border: 0;
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    color: $color-dark;
+    &:hover {
+        background-color: $color-light;
+        color: $color-dark;
+        border-radius: 5px;
+    }
+}
+
+.cta-menu {
+    border: 1px solid $color-dark;
+    background-color: $color-light;
+    color: $color-dark;
+    font-size: 3rem;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#list {
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px auto;
+        background-color: $color-light;
+        color: $color-dark;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        thead {
+            background-color: #776f6f;
+            color: $color-light;
+            tr {
+                th {
+                    padding: 10px;
+                    text-align: center;
+                    text-transform: uppercase;
+                    &:first-child {
+                        border-left: 1px solid $color-dark;
+                    }
+                }
+            }
+        }
+        tbody {
+            tr {
+                td {
+                    padding: 10px;
+                    text-align: center;
+                    border: 1px solid $color-dark;
+                }
+            }
+        }
+    }
+
+    tr {
+        &:hover {
+            background-color: $color-dark;
+            color: $color-light;
+        }
+
+        &:hover a {
+            text-decoration: underline;
+            color: $color-light;
+        }
+        a {
+            color: $color-dark;
+        }
+    }
+}
+
+.pagination-ctn {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    gap: 10px;
+    color: $color-dark;
+    button {
+        width: 35px;
+        height: 35px;
+        &:disabled {
+            background-color: gray;
+        }
+    }
+    p {
+        height: 35px;
+        margin: 0;
+        line-height: 35px;
+        text-decoration: underline;
+    }
+}
+
+#termsOfUse,
+#privacyPolicy {
+    h2 {
+        text-align: center;
+        margin: 20px 0;
+    }
+    dt {
+        font-weight: bold;
+        margin: 20px 0 5px;
+    }
+    ul {
+        list-style: circle;
+        padding-left: 40px;
+    }
+}
+
+#detail {
+    h2, p, li{
+        color: $color-light;
+    }
+}
+
+
+.back-link {
+    color: $color-dark;
+    background-color: $color-light;
+    padding: 5px;
+}
